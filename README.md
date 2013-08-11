@@ -15,4 +15,4 @@ Use the same page to authorize the Instagram account(s) ThinkUp should crawl: cl
 Crawler Plugin
 --------------
 
-During the crawl process, the Instagram plugin retrieves posts on user profiles and pages and inserts them and their comments into the ThinkUp database.
+During the crawl process, the Instagram plugin retrieves media on user profiles and inserts them and their comments into the ThinkUp database.
