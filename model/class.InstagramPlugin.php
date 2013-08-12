@@ -1,52 +1,26 @@
 <?php
-/**
- *
- * ThinkUp/webapp/plugins/facebook/model/class.FacebookPlugin.php
- *
- * Copyright (c) 2009-2013 Gina Trapani, Mark Wilkie
- *
- * LICENSE:
- *
- * This file is part of ThinkUp (http://thinkup.com).
- *
- * ThinkUp is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
- * License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any
- * later version.
- *
- * ThinkUp is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
- * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with ThinkUp.  If not, see
- * <http://www.gnu.org/licenses/>.
- *
- *
- * @author Gina Trapani <ginatrapani[at]gmail[dot]com>
- * @author Mark Wilkie <mark[at]bitterpill[dot]org>
- * @license http://www.gnu.org/licenses/gpl.html
- * @copyright 2009-2013 Gina Trapani, Mark Wilkie
- */
-class FacebookPlugin extends Plugin implements CrawlerPlugin, DashboardPlugin, PostDetailPlugin {
+
+class InstagramPlugin extends Plugin implements CrawlerPlugin, DashboardPlugin, PostDetailPlugin {
 
     public function __construct($vals=null) {
         parent::__construct($vals);
-        $this->folder_name = 'facebook';
-        $this->addRequiredSetting('facebook_app_id');
-        $this->addRequiredSetting('facebook_api_secret');
+        $this->folder_name = 'instagram';
+        $this->addRequiredSetting('instagram_app_id');
+        $this->addRequiredSetting('instagram_api_secret');
     }
 
     public function activate() {
     }
 
     public function deactivate() {
-        //Pause all active Facebook user profile and page instances
+        //Pause all active instagram user profile and page instances
         $instance_dao = DAOFactory::getDAO('InstanceDAO');
-        $facebook_instances = $instance_dao->getAllInstances("DESC", true, "facebook");
-        foreach ($facebook_instances as $ti) {
+        $instagram_instances = $instance_dao->getAllInstances("DESC", true, "instagram");
+        foreach ($instagram_instances as $ti) {
             $instance_dao->setActive($ti->id, false);
         }
-        $facebook_instances = $instance_dao->getAllInstances("DESC", true, "facebook page");
-        foreach ($facebook_instances as $ti) {
+        $instagram_instances = $instance_dao->getAllInstances("DESC", true, "instagram page");
+        foreach ($instagram_instances as $ti) {
             $instance_dao->setActive($ti->id, false);
         }
     }
@@ -59,7 +33,7 @@ class FacebookPlugin extends Plugin implements CrawlerPlugin, DashboardPlugin, P
         $owner_dao = DAOFactory::getDAO('OwnerDAO');
 
         $plugin_option_dao = DAOFactory::GetDAO('PluginOptionDAO');
-        $options = $plugin_option_dao->getOptionsHash('facebook', true); //get cached
+        $options = $plugin_option_dao->getOptionsHash('instagram', true); //get cached
 
         $max_crawl_time = isset($options['max_crawl_time']) ? $options['max_crawl_time']->option_value : 20;
         //convert to seconds
@@ -67,11 +41,11 @@ class FacebookPlugin extends Plugin implements CrawlerPlugin, DashboardPlugin, P
 
         $current_owner = $owner_dao->getByEmail(Session::getLoggedInUser());
 
-        //crawl Facebook user profiles and pages
+        //crawl instagram user profiles and pages
         $profiles = $instance_dao->getActiveInstancesStalestFirstForOwnerByNetworkNoAuthError($current_owner,
-        'facebook');
+        'instagram');
         $pages = $instance_dao->getActiveInstancesStalestFirstForOwnerByNetworkNoAuthError($current_owner,
-        'facebook page');
+        'instagram page');
         $instances = array_merge($profiles, $pages);
 
         foreach ($instances as $instance) {
@@ -83,10 +57,10 @@ class FacebookPlugin extends Plugin implements CrawlerPlugin, DashboardPlugin, P
             $access_token = $tokens['oauth_access_token'];
 
             $instance_dao->updateLastRun($instance->id);
-            $facebook_crawler = new FacebookCrawler($instance, $access_token, $max_crawl_time);
+            $instagram_crawler = new InstagramCrawler($instance, $access_token, $max_crawl_time);
             $dashboard_module_cacher = new DashboardModuleCacher($instance);
             try {
-                $facebook_crawler->fetchPostsAndReplies();
+                $instagram_crawler->fetchPostsAndReplies();
             } catch (APIOAuthException $e) {
                 //The access token is invalid, save in owner_instances table
                 $owner_instance_dao->setAuthError($current_owner->id, $instance->id, $e->getMessage());
@@ -98,7 +72,7 @@ class FacebookPlugin extends Plugin implements CrawlerPlugin, DashboardPlugin, P
             }
             $dashboard_module_cacher->cacheDashboardModules();
 
-            $instance_dao->save($facebook_crawler->instance, 0, $logger);
+            $instance_dao->save($instagram_crawler->instance, 0, $logger);
             Reporter::reportVersion($instance);
             $logger->logUserSuccess("Finished collecting data for ".$instance->network_username."'s ".
             ucwords($instance->network), __METHOD__.','.__LINE__);
@@ -117,7 +91,7 @@ class FacebookPlugin extends Plugin implements CrawlerPlugin, DashboardPlugin, P
         $option_dao = DAOFactory::getDAO('OptionDAO');
         $plugin_dao = DAOFactory::getDAO('PluginDAO');
 
-        $plugin_id = $plugin_dao->getPluginId('facebook');
+        $plugin_id = $plugin_dao->getPluginId('instagram');
         $last_email_timestamp = $option_dao->getOptionByName(OptionDAO::PLUGIN_OPTIONS.'-'.$plugin_id,
         'invalid_oauth_email_sent_timestamp');
         if (isset($last_email_timestamp)) { //option exists, a message was sent
@@ -139,14 +113,14 @@ class FacebookPlugin extends Plugin implements CrawlerPlugin, DashboardPlugin, P
             $mailer_view_mgr->assign('thinkup_site_url', Utils::getApplicationURL());
             $mailer_view_mgr->assign('email', $email );
             $mailer_view_mgr->assign('faceboook_user_name', $username);
-            $message = $mailer_view_mgr->fetch(Utils::getPluginViewDirectory('facebook').'_email.invalidtoken.tpl');
+            $message = $mailer_view_mgr->fetch(Utils::getPluginViewDirectory('instagram').'_email.invalidtoken.tpl');
 
-            Mailer::mail($email, "Please re-authorize ThinkUp to access ". $username. " on Facebook", $message);
+            Mailer::mail($email, "Please re-authorize ThinkUp to access ". $username. " on Instagram", $message);
         }
     }
 
     public function renderConfiguration($owner) {
-        $controller = new FacebookPluginConfigurationController($owner);
+        $controller = new InstagramPluginConfigurationController($owner);
         return $controller->go();
     }
 
@@ -157,7 +131,7 @@ class FacebookPlugin extends Plugin implements CrawlerPlugin, DashboardPlugin, P
     public function getDashboardMenuItems($instance) {
         $menus = array();
 
-        $posts_data_tpl = Utils::getPluginViewDirectory('facebook').'posts.tpl';
+        $posts_data_tpl = Utils::getPluginViewDirectory('instagram').'posts.tpl';
         $posts_menu_item = new MenuItem("Posts", "Post insights", $posts_data_tpl);
 
         $posts_menu_ds_1 = new Dataset("all_posts", 'PostDAO', "getAllPosts",
@@ -185,8 +159,8 @@ class FacebookPlugin extends Plugin implements CrawlerPlugin, DashboardPlugin, P
 
         $menus['posts'] = $posts_menu_item;
 
-        $friends_data_tpl = Utils::getPluginViewDirectory('facebook').'friends.tpl';
-        $friend_fan_menu_title = $instance->network == 'facebook page'?'Fans':'Friends';
+        $friends_data_tpl = Utils::getPluginViewDirectory('instagram').'friends.tpl';
+        $friend_fan_menu_title = $instance->network == 'instagram page'?'Fans':'Friends';
         $friends_menu_item = new MenuItem($friend_fan_menu_title, "Friends insights", $friends_data_tpl);
 
         $friends_menu_ds_2 = new Dataset("follower_count_history_by_day", 'FollowerCountDAO', 'getHistory',
@@ -201,15 +175,15 @@ class FacebookPlugin extends Plugin implements CrawlerPlugin, DashboardPlugin, P
 
         $menus['friends'] = $friends_menu_item;
 
-        $fb_data_tpl = Utils::getPluginViewDirectory('facebook').'facebook.inline.view.tpl';
+        $fb_data_tpl = Utils::getPluginViewDirectory('instagram').'instagram.inline.view.tpl';
 
         //All tab
         $alltab = new MenuItem("All posts", 'All your status updates', $fb_data_tpl, 'posts' );
-        $alltabds = new Dataset("all_facebook_posts", 'PostDAO', "getAllPosts",
+        $alltabds = new Dataset("all_instagram_posts", 'PostDAO', "getAllPosts",
         array($instance->network_user_id, $instance->network, 15, "#page_number#"),
         'getAllPostsIterator', array($instance->network_user_id, $instance->network, GridController::getMaxRows()),
         false);
-        $alltabds->addHelp('userguide/listings/facebook/dashboard_all_facebook_posts');
+        $alltabds->addHelp('userguide/listings/instagram/dashboard_all_instagram_posts');
         $alltab->addDataset($alltabds);
         $menus["posts-all"] = $alltab;
 
@@ -217,7 +191,7 @@ class FacebookPlugin extends Plugin implements CrawlerPlugin, DashboardPlugin, P
         $mrttab = new MenuItem("Most replied-to", "Posts with most replies", $fb_data_tpl, 'posts' );
         $mrttabds = new Dataset("most_replied_to_posts", 'PostDAO', "getMostRepliedToPosts",
         array($instance->network_user_id, $instance->network, 15, '#page_number#'));
-        $mrttabds->addHelp('userguide/listings/facebook/dashboard_mostreplies');
+        $mrttabds->addHelp('userguide/listings/instagram/dashboard_mostreplies');
         $mrttab->addDataset($mrttabds);
         $menus["posts-mostreplies"] = $mrttab;
 
@@ -225,15 +199,15 @@ class FacebookPlugin extends Plugin implements CrawlerPlugin, DashboardPlugin, P
         $mltab = new MenuItem("Most liked", "Posts with most likes", $fb_data_tpl, 'posts' );
         $mltabds = new Dataset("most_replied_to_posts", 'PostDAO', "getMostFavedPosts",
         array($instance->network_user_id, $instance->network, 15, '#page_number#'));
-        $mltabds->addHelp('userguide/listings/facebook/dashboard_mostlikes');
+        $mltabds->addHelp('userguide/listings/instagram/dashboard_mostlikes');
         $mltab->addDataset($mltabds);
         $menus["posts-mostlikes"] = $mltab;
 
         //Questions tab
         $qtab = new MenuItem("Inquiries", "Inquiries, or posts with a question mark in them", $fb_data_tpl, 'posts' );
-        $qtabds = new Dataset("all_facebook_posts", 'PostDAO', "getAllQuestionPosts",
+        $qtabds = new Dataset("all_instagram_posts", 'PostDAO', "getAllQuestionPosts",
         array($instance->network_user_id, $instance->network, 15, "#page_number#"));
-        $qtabds->addHelp('userguide/listings/facebook/dashboard_questions');
+        $qtabds->addHelp('userguide/listings/instagram/dashboard_questions');
         $qtab->addDataset($qtabds);
         $menus["posts-questions"] = $qtab;
 
@@ -242,7 +216,7 @@ class FacebookPlugin extends Plugin implements CrawlerPlugin, DashboardPlugin, P
         $messagestabds = new Dataset("messages_to_you", 'PostDAO', "getPostsToUser",
         array($instance->network_user_id, $instance->network, 15, '#page_number#', !Session::isLoggedIn()),
         'getPostsToUserIterator', array($instance->network_user_id, $instance->network, GridController::getMaxRows()));
-        $messagestabds->addHelp('userguide/listings/facebook/dashboard-wallposts');
+        $messagestabds->addHelp('userguide/listings/instagram/dashboard-wallposts');
         $messagestab->addDataset($messagestabds);
         $menus["posts-toyou"] = $messagestab;
 
@@ -250,11 +224,11 @@ class FacebookPlugin extends Plugin implements CrawlerPlugin, DashboardPlugin, P
     }
 
     public function getPostDetailMenuItems($post) {
-        $facebook_data_tpl = Utils::getPluginViewDirectory('facebook').'facebook.post.likes.tpl';
+        $instagram_data_tpl = Utils::getPluginViewDirectory('instagram').'instagram.post.likes.tpl';
         $menus = array();
 
-        if ($post->network == 'facebook' || $post->network == 'facebook page') {
-            $likes_menu_item = new MenuItem("Likes", "Those who liked this post", $facebook_data_tpl);
+        if ($post->network == 'instagram' || $post->network == 'instagram page') {
+            $likes_menu_item = new MenuItem("Likes", "Those who liked this post", $instagram_data_tpl);
             //if not logged in, show only public fav'd info
             $liked_dataset = new Dataset("likes", 'FavoritePostDAO', "getUsersWhoFavedPost", array($post->post_id,
             $post->network, !Session::isLoggedIn()) );
