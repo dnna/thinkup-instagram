@@ -36,7 +36,7 @@ class FacebookGraphAPIAccessor {
      * @param str $access_token
      * @return array Decoded JSON response
      */
-    public static function apiRequest($path, $access_token, $fields=null) {
+    public static function apiRequest($path, $access_token) {
         $api_domain = 'https://graph.facebook.com';
         $url = $api_domain.$path;//.'?access_token='.$access_token;
 
