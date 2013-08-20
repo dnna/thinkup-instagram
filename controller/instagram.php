@@ -17,7 +17,6 @@ if (!class_exists('Instagram\Instagram')) {
 
 $webapp_plugin_registrar = PluginRegistrarWebapp::getInstance();
 $webapp_plugin_registrar->registerPlugin('instagram', 'InstagramPlugin');
-$webapp_plugin_registrar->registerPlugin('instagram page', 'InstagramPlugin');
 
 $crawler_plugin_registrar = PluginRegistrarCrawler::getInstance();
 $crawler_plugin_registrar->registerCrawlerPlugin('InstagramPlugin');
