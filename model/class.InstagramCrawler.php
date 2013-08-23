@@ -81,16 +81,17 @@ class InstagramCrawler {
         if ($details->getUserName() != null && $details->getId() != null) {
             $user_vals = array();
 
+            $user_vals["post_count"] = $details->getMediaCount();
+            $user_vals["follower_count"] = $details->getFollowersCount();
+
             $user_vals["user_name"] = $details->getUserName();
             $user_vals["full_name"] = $details->getFullName();
             $user_vals["user_id"] = $details->getId();
             $user_vals["avatar"] = $details->getProfilePicture();
             $user_vals['url'] = $details->getWebsite()!=null?$details->getWebsite():'';
-            $user_vals["follower_count"] = $details->getFollowersCount();
             $user_vals["location"] = '';
             $user_vals["description"] = $details->getBio()!=null?$details->getBio():'';
             $user_vals["is_protected"] = 1; //for now, assume a instagram user is private
-            $user_vals["post_count"] = $details->getMediaCount();
             $user_vals["joined"] = null;
             $user_vals["network"] = $details->network;
             //this will help us in getting correct range of posts
