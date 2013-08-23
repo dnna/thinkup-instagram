@@ -5,11 +5,11 @@
     {if $description}<h3>{$description}</h3>{/if}
 </div>
 
-{if ($display eq 'posts-all' and not $all_facebook_posts) }
+{if ($display eq 'posts-all' and not $all_instagram_posts) }
   <div class="ui-state-highlight ui-corner-all" style="margin: 20px 0px; padding: .5em 0.7em;"> 
     <p>
       <span class="ui-icon ui-icon-info" style="float: left; margin:.3em 0.3em 0 0;"></span>
-      No Facebook posts to display.
+      No Instagram posts to display.
     </p>
   </div>
 {/if}
@@ -20,9 +20,9 @@
 </div>
     
 
-{if $all_facebook_posts and ($display eq 'posts-all' OR $display eq 'posts-questions')}
+{if $all_instagram_posts and ($display eq 'posts-all' OR $display eq 'posts-questions')}
 <div id="all-posts-div">
-  {foreach from=$all_facebook_posts key=tid item=t name=foo}
+  {foreach from=$all_instagram_posts key=tid item=t name=foo}
     {include file="_post.counts_no_author.tpl" post=$t show_favorites_instead_of_retweets="true"}
   {/foreach}
 </div>
@@ -45,17 +45,17 @@
 {/if}
 
 
-{if ($display eq 'followers_mostfollowed' and not $facebook_users) or ($display eq 'friends_mostactive' and not $facebook_users) }
+{if ($display eq 'followers_mostfollowed' and not $instagram_users) or ($display eq 'friends_mostactive' and not $instagram_users) }
   <div class="alert urgent"> 
     <p>
       <span class="ui-icon ui-icon-info" style="float: left; margin:.3em 0.3em 0 0;"></span>
-      No Facebook users found.
+      No Instagram users found.
     </p>
   </div>
 {/if}
 
-{if $facebook_users}
-  {foreach from=$facebook_users key=fid item=f name=foo}
+{if $instagram_users}
+  {foreach from=$instagram_users key=fid item=f name=foo}
     {include file="_user.tpl" t=$f}
   {/foreach}
 {/if}

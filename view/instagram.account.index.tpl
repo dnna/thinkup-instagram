@@ -37,7 +37,7 @@
         <div class="span3">
             <span id="delete{$i->id}"><form method="post" action="{$site_root_path}account/?p=instagram"><input type="hidden" name="instance_id" value="{$i->id}">
             {insert name="csrf_token"}<!-- delete account csrf token -->
-            <input onClick="return confirm('Do you really want to delete this Facebook account from ThinkUp?');"  type="submit" name="action" class="btn btn-danger" value="Delete" /></form></span>
+            <input onClick="return confirm('Do you really want to delete this Instagram account from ThinkUp?');"  type="submit" name="action" class="btn btn-danger" value="Delete" /></form></span>
         </div>
     </div>
     {/foreach}

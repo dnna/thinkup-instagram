@@ -1,5 +1,5 @@
 <div class="section">
-    <h2>{if $instance->network eq 'facebook page'}Likes{else}Friends{/if} By Day {if $follower_count_history_by_day.trend}{if $follower_count_history_by_day.trend > 0}(<span style="color:green">+{else}<span style="color:red">{/if}{$follower_count_history_by_day.trend|number_format}</span>/day){/if}</h2>
+    <h2>{if $instance->network eq 'instagram page'}Likes{else}Friends{/if} By Day {if $follower_count_history_by_day.trend}{if $follower_count_history_by_day.trend > 0}(<span style="color:green">+{else}<span style="color:red">{/if}{$follower_count_history_by_day.trend|number_format}</span>/day){/if}</h2>
 
     {if !$follower_count_history_by_day.history OR $follower_count_history_by_day.history|@count < 2}
     <div class="alert urgent">Not enough data to display chart</div>
@@ -16,7 +16,7 @@
 </div>
 
 <div class="section">
-    <h2>{if $instance->network eq 'facebook page'}Likes{else}Friends{/if} By Week {if $follower_count_history_by_week.trend != 0}{if $follower_count_history_by_week.trend > 0}(<span style="color:green">+{else}<span style="color:red">{/if}{$follower_count_history_by_week.trend|number_format}</span>/week){/if}</h2>
+    <h2>{if $instance->network eq 'instagram page'}Likes{else}Friends{/if} By Week {if $follower_count_history_by_week.trend != 0}{if $follower_count_history_by_week.trend > 0}(<span style="color:green">+{else}<span style="color:red">{/if}{$follower_count_history_by_week.trend|number_format}</span>/week){/if}</h2>
 
     {if !$follower_count_history_by_week.history OR $follower_count_history_by_week.history|@count < 2}<div class="alert urgent">Not enough data to display chart</div>
     {else} 
@@ -33,7 +33,7 @@
 </div>
 
 <div class="section">
-    <h2>{if $instance->network eq 'facebook page'}Likes{else}Friends{/if} By Month {if $follower_count_history_by_month.trend != 0}{if $follower_count_history_by_month.trend > 0}(<span style="color:green">+{else}<span style="color:red">{/if}{$follower_count_history_by_month.trend|number_format}</span>/month){/if}</h2>
+    <h2>{if $instance->network eq 'instagram page'}Likes{else}Friends{/if} By Month {if $follower_count_history_by_month.trend != 0}{if $follower_count_history_by_month.trend > 0}(<span style="color:green">+{else}<span style="color:red">{/if}{$follower_count_history_by_month.trend|number_format}</span>/month){/if}</h2>
 
     {if !$follower_count_history_by_month.history OR $follower_count_history_by_month.history|@count < 2}<div class="alert urgent">Not enough data to display chart</i></div>
     {else} 

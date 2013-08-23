@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * ThinkUp/webapp/plugins/facebook/tests/TestOfFacebookCrawler.php
+ * ThinkUp/webapp/plugins/instagram/tests/TestOfInstagramCrawler.php
  *
  * Copyright (c) 2009-2013 Dimosthenis Nikoudis
  *
@@ -21,7 +21,7 @@
  * <http://www.gnu.org/licenses/>.
  *
  *
- * Test of FacebookCrawler
+ * Test of InstagramCrawler
  *
  * @author Dimosthenis Nikoudis <dnna[at]dnna[dot]gr>
  * @license http://www.gnu.org/licenses/gpl.html
@@ -30,11 +30,11 @@
 require_once dirname(__FILE__) . '/../../../../tests/init.tests.php';
 require_once THINKUP_WEBAPP_PATH.'_lib/extlib/simpletest/autorun.php';
 require_once THINKUP_WEBAPP_PATH.'_lib/extlib/simpletest/web_tester.php';
-require_once THINKUP_WEBAPP_PATH.'plugins/facebook/model/class.FacebookCrawler.php';
-require_once THINKUP_WEBAPP_PATH.'plugins/facebook/tests/classes/mock.FacebookGraphAPIAccessor.php';
-require_once THINKUP_WEBAPP_PATH.'plugins/facebook/tests/classes/mock.facebook.php';
+require_once THINKUP_WEBAPP_PATH.'plugins/instagram/model/class.InstagramCrawler.php';
+require_once THINKUP_WEBAPP_PATH.'plugins/instagram/tests/classes/mock.InstagramGraphAPIAccessor.php';
+require_once THINKUP_WEBAPP_PATH.'plugins/instagram/tests/classes/mock.instagram.php';
 
-class TestOfFacebookCrawler extends ThinkUpUnitTestCase {
+class TestOfInstagramCrawler extends ThinkUpUnitTestCase {
     /**
      *
      * @var Instance
@@ -54,7 +54,7 @@ class TestOfFacebookCrawler extends ThinkUpUnitTestCase {
         'last_page_fetched_tweets'=>'0', 'total_posts_in_system'=>'0', 'total_replies_in_system'=>'0',
         'total_follows_in_system'=>'0', 'is_archive_loaded_replies'=>'0',
         'is_archive_loaded_follows'=>'0', 'crawler_last_run'=>'', 'earliest_reply_in_system'=>'',
-        'avg_replies_per_day'=>'2', 'is_public'=>'0', 'is_active'=>'0', 'network'=>'facebook',
+        'avg_replies_per_day'=>'2', 'is_public'=>'0', 'is_active'=>'0', 'network'=>'instagram',
         'last_favorite_id' => '0', 'owner_favs_in_system' => '0', 'total_posts_by_owner'=>0,
         'posts_per_day'=>1, 'posts_per_week'=>1, 'percentage_replies'=>50, 'percentage_links'=>50,
         'earliest_post_in_system'=>'2009-01-01 13:48:05', 'favorites_profile' => '0'
@@ -66,7 +66,7 @@ class TestOfFacebookCrawler extends ThinkUpUnitTestCase {
         'last_page_fetched_tweets'=>'0', 'total_posts_in_system'=>'0', 'total_replies_in_system'=>'0',
         'total_follows_in_system'=>'0', 'is_archive_loaded_replies'=>'0',
         'is_archive_loaded_follows'=>'0', 'crawler_last_run'=>'', 'earliest_reply_in_system'=>'',
-        'avg_replies_per_day'=>'2', 'is_public'=>'0', 'is_active'=>'0', 'network'=>'facebook',
+        'avg_replies_per_day'=>'2', 'is_public'=>'0', 'is_active'=>'0', 'network'=>'instagram',
         'last_favorite_id' => '0', 'owner_favs_in_system' => '0', 'total_posts_by_owner'=>0,
         'posts_per_day'=>1, 'posts_per_week'=>1, 'percentage_replies'=>50, 'percentage_links'=>50,
         'earliest_post_in_system'=>'2009-01-01 13:48:05', 'favorites_profile' => '0'
@@ -78,7 +78,7 @@ class TestOfFacebookCrawler extends ThinkUpUnitTestCase {
         'last_page_fetched_tweets'=>'0', 'total_posts_in_system'=>'0', 'total_replies_in_system'=>'0',
         'total_follows_in_system'=>'0', 'is_archive_loaded_replies'=>'0',
         'is_archive_loaded_follows'=>'0', 'crawler_last_run'=>'', 'earliest_reply_in_system'=>'',
-        'avg_replies_per_day'=>'2', 'is_public'=>'0', 'is_active'=>'0', 'network'=>'facebook page',
+        'avg_replies_per_day'=>'2', 'is_public'=>'0', 'is_active'=>'0', 'network'=>'instagram page',
         'last_favorite_id' => '0', 'owner_favs_in_system' => '0', 'total_posts_by_owner'=>0,
         'posts_per_day'=>1, 'posts_per_week'=>1, 'percentage_replies'=>50, 'percentage_links'=>50,
         'earliest_post_in_system'=>'2009-01-01 13:48:05', 'favorites_profile' => '0'
@@ -90,7 +90,7 @@ class TestOfFacebookCrawler extends ThinkUpUnitTestCase {
         'last_page_fetched_tweets'=>'0', 'total_posts_in_system'=>'0', 'total_replies_in_system'=>'0',
         'total_follows_in_system'=>'0', 'is_archive_loaded_replies'=>'0',
         'is_archive_loaded_follows'=>'0', 'crawler_last_run'=>'', 'earliest_reply_in_system'=>'',
-        'avg_replies_per_day'=>'2', 'is_public'=>'0', 'is_active'=>'0', 'network'=>'facebook page',
+        'avg_replies_per_day'=>'2', 'is_public'=>'0', 'is_active'=>'0', 'network'=>'instagram page',
         'last_favorite_id' => '0', 'owner_favs_in_system' => '0', 'total_posts_by_owner'=>0,
         'posts_per_day'=>1, 'posts_per_week'=>1, 'percentage_replies'=>50, 'percentage_links'=>50,
         'earliest_post_in_system'=>'2009-01-01 13:48:05', 'favorites_profile' => '0'
@@ -102,7 +102,7 @@ class TestOfFacebookCrawler extends ThinkUpUnitTestCase {
         'last_page_fetched_tweets'=>'0', 'total_posts_in_system'=>'0', 'total_replies_in_system'=>'0',
         'total_follows_in_system'=>'0', 'is_archive_loaded_replies'=>'0',
         'is_archive_loaded_follows'=>'0', 'crawler_last_run'=>'', 'earliest_reply_in_system'=>'',
-        'avg_replies_per_day'=>'2', 'is_public'=>'0', 'is_active'=>'0', 'network'=>'facebook',
+        'avg_replies_per_day'=>'2', 'is_public'=>'0', 'is_active'=>'0', 'network'=>'instagram',
         'last_favorite_id' => '0', 'owner_favs_in_system' => '0', 'total_posts_by_owner'=>0,
         'posts_per_day'=>1, 'posts_per_week'=>1, 'percentage_replies'=>50, 'percentage_links'=>50,
         'earliest_post_in_system'=>'2009-01-01 13:48:05', 'favorites_profile' => '0'
@@ -116,15 +116,15 @@ class TestOfFacebookCrawler extends ThinkUpUnitTestCase {
     }
 
     public function testConstructor() {
-        $fbc = new FacebookCrawler($this->profile1_instance, 'fauxaccesstoken', 10);
+        $fbc = new InstagramCrawler($this->profile1_instance, 'fauxaccesstoken', 10);
         $this->assertEqual($fbc->access_token, 'fauxaccesstoken');
     }
 
     public function testFetchUser() {
-        $fbc = new FacebookCrawler($this->profile1_instance, 'fauxaccesstoken', 10);
+        $fbc = new InstagramCrawler($this->profile1_instance, 'fauxaccesstoken', 10);
         $fbc->fetchUser($this->profile1_instance->network_user_id, $this->profile1_instance->network, "Owner Status");
         $user_dao = new UserMySQLDAO();
-        $user = $user_dao->getUserByName('Gina Trapani', 'facebook');
+        $user = $user_dao->getUserByName('Gina Trapani', 'instagram');
 
         $this->assertTrue(isset($user));
         $this->assertEqual($user->username, 'Gina Trapani');
@@ -138,12 +138,12 @@ class TestOfFacebookCrawler extends ThinkUpUnitTestCase {
     }
 
     public function testFetchPostsAndRepliesForProfile1() {
-        $fbc = new FacebookCrawler($this->profile1_instance, 'fauxaccesstoken', 120);
+        $fbc = new InstagramCrawler($this->profile1_instance, 'fauxaccesstoken', 120);
 
         $config = Config::getInstance();
-        $facebook_crawler_log = $config->getValue('log_location');
+        $instagram_crawler_log = $config->getValue('log_location');
         // prepare log for reading after fetchPostsAndReplies
-        $log_reader_handle = fopen($facebook_crawler_log, 'r');
+        $log_reader_handle = fopen($instagram_crawler_log, 'r');
         fseek($log_reader_handle, 0, SEEK_END);
 
         $fbc->fetchPostsAndReplies();
@@ -151,18 +151,18 @@ class TestOfFacebookCrawler extends ThinkUpUnitTestCase {
         fflush($this->logger->log);
         $log_written = stream_get_contents($log_reader_handle);
         fclose($log_reader_handle);
-        $this->assertFalse(preg_match('/FacebookCrawler::fetchPostsAndReplies,\d+ \| 0 Facebook posts found on page 2/',
+        $this->assertFalse(preg_match('/InstagramCrawler::fetchPostsAndReplies,\d+ \| 0 Instagram posts found on page 2/',
         $log_written));
 
         $post_dao = new PostMySQLDAO();
-        $post = $post_dao->getPost('158944054123704', 'facebook');
+        $post = $post_dao->getPost('158944054123704', 'instagram');
         $this->assertEqual($post->post_text, 'that movie made me want to build things');
         $this->assertEqual($post->reply_count_cache, 0);
         $this->assertTrue($post->is_protected);
         $this->assertEqual($post->favlike_count_cache, 0);
         $this->assertEqual($post->location, 'San Diego, California');
 
-        $post = $post_dao->getPost('153956564638648', 'facebook');
+        $post = $post_dao->getPost('153956564638648', 'instagram');
         $this->assertEqual($post->post_text,
         'Britney Glee episode tonight. I may explode into a million pieces, splattered all over my living room walls.');
         $this->assertEqual($post->reply_count_cache, 19);
@@ -171,12 +171,12 @@ class TestOfFacebookCrawler extends ThinkUpUnitTestCase {
         $this->assertEqual($post->location, 'San Diego, California');
 
         // wall post
-        $post = $post_dao->getPost('10150414865507812', 'facebook');
+        $post = $post_dao->getPost('10150414865507812', 'instagram');
         $this->assertEqual($post->author_user_id, '503315820');
         $this->assertEqual($post->location, 'Portland, Oregon');
         $this->assertEqual($post->in_reply_to_user_id, $this->profile1_instance->network_user_id);
 
-        $post = $post_dao->getPost('1546020', 'facebook');
+        $post = $post_dao->getPost('1546020', 'instagram');
         $this->assertPattern('/not the target demographic/', $post->post_text);
         $this->assertEqual($post->reply_count_cache, 0);
         $this->assertEqual($post->in_reply_to_post_id, '153956564638648');
@@ -185,40 +185,40 @@ class TestOfFacebookCrawler extends ThinkUpUnitTestCase {
         $this->assertEqual($post->location, 'La Mesa, California');
 
         $user_dao = new UserMySQLDAO();
-        $user = $user_dao->getUserByName('Gina Trapani', 'facebook');
+        $user = $user_dao->getUserByName('Gina Trapani', 'instagram');
         $this->assertTrue(isset($user));
         $this->assertEqual($user->username, 'Gina Trapani');
         $this->assertEqual($user->full_name, 'Gina Trapani');
         $this->assertEqual($user->user_id, '606837591');
-        $this->assertEqual($user->avatar, 'https://graph.facebook.com/606837591/picture');
+        $this->assertEqual($user->avatar, 'https://graph.instagram.com/606837591/picture');
         $this->assertTrue($user->is_protected);
         $this->assertEqual($user->location, 'San Diego, California');
         //sleep(1000);
-        $user = $user_dao->getUserByName('Mitch Wagner', 'facebook');
+        $user = $user_dao->getUserByName('Mitch Wagner', 'instagram');
         $this->assertTrue(isset($user));
         $this->assertEqual($user->user_id, '697015835');
-        $this->assertEqual($user->avatar, 'https://graph.facebook.com/697015835/picture');
+        $this->assertEqual($user->avatar, 'https://graph.instagram.com/697015835/picture');
         $this->assertTrue($user->is_protected);
         $this->assertEqual($user->location, 'La Mesa, California');
 
-        $user = $user_dao->getUserByName('Jeffrey McManus', 'facebook');
+        $user = $user_dao->getUserByName('Jeffrey McManus', 'instagram');
         $this->assertTrue(isset($user));
         $this->assertEqual($user->user_id, '691270740');
-        $this->assertEqual($user->avatar, 'https://graph.facebook.com/691270740/picture');
+        $this->assertEqual($user->avatar, 'https://graph.instagram.com/691270740/picture');
         $this->assertTrue($user->is_protected);
         $this->assertEqual($user->location, '');
     }
 
     public function testFetchPostsAndRepliesForProfile2() {
         //Test post with a link to a video
-        $fbc2 = new FacebookCrawler($this->profile2_instance, 'fauxaccesstoken', 10);
+        $fbc2 = new InstagramCrawler($this->profile2_instance, 'fauxaccesstoken', 10);
 
         $fbc2->fetchPostsAndReplies();
 
         $post_dao = new PostMySQLDAO();
         $user_dao = new UserMySQLDAO();
 
-        $post = $post_dao->getPost('10150328374252744', 'facebook');
+        $post = $post_dao->getPost('10150328374252744', 'instagram');
         $this->assertEqual($post->post_text, '');
         $this->assertEqual(sizeof($post->links), 1);
         $this->assertEqual($post->links[0]->url,
@@ -232,22 +232,22 @@ class TestOfFacebookCrawler extends ThinkUpUnitTestCase {
         $this->assertEqual($post->links[0]->title, 'Superman Restored (Theatrical Trailer)');
         $this->assertEqual($post->links[0]->post_key, 1);
 
-        // Test Facebook paging by confirming post on second "page"
-        $post = $post_dao->getPost('10150357566827744', 'facebook');
+        // Test Instagram paging by confirming post on second "page"
+        $post = $post_dao->getPost('10150357566827744', 'instagram');
         $this->assertNotNull($post);
         $this->assertEqual($post->author_user_id, '729597743');
 
-        // Test Facebook friends and followers. This user only exists in testing as a "friend."
-        $user = $user_dao->getUserByName('Poppy Linford', 'facebook');
+        // Test Instagram friends and followers. This user only exists in testing as a "friend."
+        $user = $user_dao->getUserByName('Poppy Linford', 'instagram');
         $this->assertTrue(isset($user));
         $this->assertEqual($user->user_id, '682523675');
         // Test follow is set
         $follow_dao = new FollowMySQLDAO();
-        $this->assertTrue($follow_dao->followExists('729597743', '682523675', 'facebook'));
+        $this->assertTrue($follow_dao->followExists('729597743', '682523675', 'instagram'));
 
         // Test FollowerCount is set
         $sql = "SELECT * FROM ".$this->table_prefix.
-        "follower_count WHERE network='facebook' AND network_user_id='729597743';";
+        "follower_count WHERE network='instagram' AND network_user_id='729597743';";
 
         $stmt = FollowerCountMySQLDAO::$PDO->query($sql);
         $data = array();
@@ -260,7 +260,7 @@ class TestOfFacebookCrawler extends ThinkUpUnitTestCase {
     }
 
     public function testFetchPostsAndRepliesForProfile3Error() {
-        $fbc = new FacebookCrawler($this->profile3_instance, 'fauxaccesstoken', 10);
+        $fbc = new InstagramCrawler($this->profile3_instance, 'fauxaccesstoken', 10);
 
         $this->expectException('APIOAuthException',
         'Error validating access token: Session has expired at unix time SOME_TIME. The current unix time is '.
@@ -270,12 +270,12 @@ class TestOfFacebookCrawler extends ThinkUpUnitTestCase {
     }
 
     public function testFetchPostsAndRepliesForPage() {
-        $fbc = new FacebookCrawler($this->page1_instance, 'fauxaccesstoken', 10);
+        $fbc = new InstagramCrawler($this->page1_instance, 'fauxaccesstoken', 10);
 
         $fbc->fetchPostsAndReplies();
 
         $post_dao = new PostMySQLDAO();
-        $post = $post_dao->getPost('437900891355', 'facebook page');
+        $post = $post_dao->getPost('437900891355', 'instagram page');
         $this->assertEqual($post->post_text, 'Top 10 iOS Jailbreak Hacks');
         $this->assertFalse($post->is_protected);
         $this->assertEqual($post->reply_count_cache, 8);
@@ -294,29 +294,29 @@ class TestOfFacebookCrawler extends ThinkUpUnitTestCase {
         'If you purchased an iOS device, you also signed up for its many limitations. Jailbreaking can put you back '.
         'in control. Here are ten great jailbreak hacks to help you customize and better utilize your iOS device...');
 
-        //assert user network is set to Facebook, not Facebook Page
+        //assert user network is set to Instagram, not Instagram Page
         $ud = new UserMySQLDAO();
-        $user = $ud->getUserByName('Matthew Fleisher', 'facebook');
+        $user = $ud->getUserByName('Matthew Fleisher', 'instagram');
         $this->assertEqual($user->full_name, 'Matthew Fleisher');
-        $this->assertEqual($user->network, 'facebook');
+        $this->assertEqual($user->network, 'instagram');
         $this->assertTrue($user->is_protected);
 
-        $user = $ud->getUserByName('Matthew Fleisher', 'facebook page');
+        $user = $ud->getUserByName('Matthew Fleisher', 'instagram page');
         $this->assertEqual($user, null);
 
         $fav_dao = new FavoritePostMySQLDAO();
-        $favs = $fav_dao->getUsersWhoFavedPost('437894121355', 'facebook page');
+        $favs = $fav_dao->getUsersWhoFavedPost('437894121355', 'instagram page');
         $this->assertEqual($favs[0]['user_name'], 'Tigger Pike');
         $this->assertEqual($favs[0]['user_id'], '641265671');
 
-        // Test Facebook paging by confirming post on second "page" was captured
-        $post = $post_dao->getPost('437660146355', 'facebook page');
+        // Test Instagram paging by confirming post on second "page" was captured
+        $post = $post_dao->getPost('437660146355', 'instagram page');
         $this->assertNotNull($post);
         $this->assertEqual($post->author_user_id, '7568536355');
 
         // Test FollowerCount is set
         $sql = "SELECT * FROM ".$this->table_prefix.
-        "follower_count WHERE network='facebook page' AND network_user_id='7568536355';";
+        "follower_count WHERE network='instagram page' AND network_user_id='7568536355';";
 
         $stmt = FollowerCountMySQLDAO::$PDO->query($sql);
         $data = array();
@@ -328,11 +328,11 @@ class TestOfFacebookCrawler extends ThinkUpUnitTestCase {
     }
 
     public function testPostReplyPaging() {
-        $fbc = new FacebookCrawler($this->page2_instance, 'fauxaccesstoken', 10);
+        $fbc = new InstagramCrawler($this->page2_instance, 'fauxaccesstoken', 10);
 
-        $fbc->fetchPostsAndReplies('133954286636768', 'facebook page');
+        $fbc->fetchPostsAndReplies('133954286636768', 'instagram page');
         $post_dao = new PostMySQLDAO();
-        $post = $post_dao->getPost('144568048938151', 'facebook page');
+        $post = $post_dao->getPost('144568048938151', 'instagram page');
         $this->assertEqual($post->reply_count_cache, 70);
     }
 }
