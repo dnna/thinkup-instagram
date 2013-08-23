@@ -19,10 +19,6 @@ class InstagramPlugin extends Plugin implements CrawlerPlugin, DashboardPlugin, 
         foreach ($instagram_instances as $ti) {
             $instance_dao->setActive($ti->id, false);
         }
-        $instagram_instances = $instance_dao->getAllInstances("DESC", true, "instagram page");
-        foreach ($instagram_instances as $ti) {
-            $instance_dao->setActive($ti->id, false);
-        }
     }
 
     public function crawl() {
@@ -44,9 +40,7 @@ class InstagramPlugin extends Plugin implements CrawlerPlugin, DashboardPlugin, 
         //crawl instagram user profiles and pages
         $profiles = $instance_dao->getActiveInstancesStalestFirstForOwnerByNetworkNoAuthError($current_owner,
         'instagram');
-        $pages = $instance_dao->getActiveInstancesStalestFirstForOwnerByNetworkNoAuthError($current_owner,
-        'instagram page');
-        $instances = array_merge($profiles, $pages);
+        $instances = $profiles;
 
         foreach ($instances as $instance) {
             $logger->setUsername(ucwords($instance->network) . ' | '.$instance->network_username );
@@ -160,8 +154,8 @@ class InstagramPlugin extends Plugin implements CrawlerPlugin, DashboardPlugin, 
         $menus['posts'] = $posts_menu_item;
 
         $friends_data_tpl = Utils::getPluginViewDirectory('instagram').'friends.tpl';
-        $friend_fan_menu_title = $instance->network == 'instagram page'?'Fans':'Friends';
-        $friends_menu_item = new MenuItem($friend_fan_menu_title, "Friends insights", $friends_data_tpl);
+        $friend_fan_menu_title = 'Followers';
+        $friends_menu_item = new MenuItem($friend_fan_menu_title, "Followers insights", $friends_data_tpl);
 
         $friends_menu_ds_2 = new Dataset("follower_count_history_by_day", 'FollowerCountDAO', 'getHistory',
         array($instance->network_user_id, $instance->network, 'DAY', 15));
@@ -227,7 +221,7 @@ class InstagramPlugin extends Plugin implements CrawlerPlugin, DashboardPlugin, 
         $instagram_data_tpl = Utils::getPluginViewDirectory('instagram').'instagram.post.likes.tpl';
         $menus = array();
 
-        if ($post->network == 'instagram' || $post->network == 'instagram page') {
+        if ($post->network == 'instagram') {
             $likes_menu_item = new MenuItem("Likes", "Those who liked this post", $instagram_data_tpl);
             //if not logged in, show only public fav'd info
             $liked_dataset = new Dataset("likes", 'FavoritePostDAO', "getUsersWhoFavedPost", array($post->post_id,

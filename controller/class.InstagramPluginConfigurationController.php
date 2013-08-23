@@ -98,7 +98,7 @@ class InstagramPluginConfigurationController extends PluginConfigurationControll
         $this->addToView('instances', $instances);
     }
     /**
-     * Process actions based on $_GET parameters. Authorize Instagram user or add Instagram page.
+     * Process actions based on $_GET parameters. Authorize Instagram user.
      * @param arr $options instagram plugin options
      * @param instagram $instagramAuth instagram object
      */

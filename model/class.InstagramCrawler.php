@@ -18,11 +18,6 @@ class InstagramCrawler {
      */
     var $max_crawl_time;
     /**
-     * Whether or not an instance instagram Page's total likes has been recorded in the follower count table.
-     * @var bool
-     */
-    var $page_like_count_set = false;
-    /**
      * @param Instance $instance
      * @return InstagramCrawler
      */
@@ -42,7 +37,6 @@ class InstagramCrawler {
      */
     public function fetchUser($user_id, $found_in, $force_reload_from_instagram=false) {
         //assume all users except the instance user is a instagram profile, not a page
-        //@TODO: Start supporting users of type 'instagram page'
         $network = ($user_id == $this->instance->network_user_id)?$this->instance->network:'instagram';
         $user_dao = DAOFactory::getDAO('UserDAO');
         $user_object = null;
@@ -63,7 +57,6 @@ class InstagramCrawler {
                 $this->logger->logSuccess("Successfully fetched ".$user_id. " ".$network."'s details from instagram",
                 __METHOD__.','.__LINE__);
             } else {
-                //@TODO: Most of these errors occur because TU doesn't yet support users of type 'instagram page'
                 //We just assume every user is a vanilla FB user. However, we can't retrieve page details using
                 //a vanilla user call here
                 $this->logger->logInfo("Error fetching ".$user_id." ". $network."'s details from instagram API, ".
