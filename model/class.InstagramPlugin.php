@@ -38,9 +38,8 @@ class InstagramPlugin extends Plugin implements CrawlerPlugin, DashboardPlugin, 
         $current_owner = $owner_dao->getByEmail(Session::getLoggedInUser());
 
         //crawl instagram user profiles and pages
-        $profiles = $instance_dao->getActiveInstancesStalestFirstForOwnerByNetworkNoAuthError($current_owner,
+        $instances = $instance_dao->getActiveInstancesStalestFirstForOwnerByNetworkNoAuthError($current_owner,
         'instagram');
-        $instances = $profiles;
 
         foreach ($instances as $instance) {
             $logger->setUsername(ucwords($instance->network) . ' | '.$instance->network_username );
@@ -55,7 +54,7 @@ class InstagramPlugin extends Plugin implements CrawlerPlugin, DashboardPlugin, 
             $dashboard_module_cacher = new DashboardModuleCacher($instance);
             try {
                 $instagram_crawler->fetchPostsAndReplies();
-            } catch (APIOAuthException $e) {
+            } catch (Instagram\Core\ApiAuthException $e) {
                 //The access token is invalid, save in owner_instances table
                 $owner_instance_dao->setAuthError($current_owner->id, $instance->id, $e->getMessage());
                 //Send email alert

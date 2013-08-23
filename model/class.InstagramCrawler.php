@@ -462,8 +462,8 @@ class InstagramCrawler {
             }
             //totals in follower_count table
             $follower_count_dao->insert($user_id, $network, $friends->count());
-        } elseif (isset($stream->error->type) && ($stream->error->type == 'OAuthException')) {
-            throw new APIOAuthException($stream->error->message);
+        } else {
+            throw new Instagram\Core\ApiAuthException('Error retrieving friends');
         }
     }
 }
