@@ -3,7 +3,7 @@
  *
  * ThinkUp/webapp/plugins/facebook/tests/TestOfFacebookCrawler.php
  *
- * Copyright (c) 2009-2013 Gina Trapani
+ * Copyright (c) 2009-2013 Dimosthenis Nikoudis
  *
  * LICENSE:
  *
@@ -23,9 +23,9 @@
  *
  * Test of FacebookCrawler
  *
- * @author Gina Trapani <ginatrapani[at]gmail[dot]com>
+ * @author Dimosthenis Nikoudis <dnna[at]dnna[dot]gr>
  * @license http://www.gnu.org/licenses/gpl.html
- * @copyright 2009-2013 Gina Trapani
+ * @copyright 2009-2013 Dimosthenis Nikoudis
  */
 require_once dirname(__FILE__) . '/../../../../tests/init.tests.php';
 require_once THINKUP_WEBAPP_PATH.'_lib/extlib/simpletest/autorun.php';
