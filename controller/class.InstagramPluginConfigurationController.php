@@ -139,8 +139,8 @@ class InstagramPluginConfigurationController extends PluginConfigurationControll
                 $this->addSuccessMessage("Success! Your instagram account has been added to ThinkUp.", 'user_add');
             } else {
                 $owner_instance_dao->updateTokens($this->owner->id, $instance->id, $instagram_access_token, '');
-                $this->addSuccessMessage("Success! You've reconnected your instagram account. To connect a ".
-                "different account, log  out of instagram in a different browser tab and try again.", 'user_add');
+                $this->addSuccessMessage("Success! You've reconnected your Instagram account. To connect ".
+                "a different account, log  out of Instagram in a different browser tab and try again.", 'user_add');
             }
             //set auth error to empty string
             $owner_instance_dao->setAuthError($this->owner->id, $instance->id);
